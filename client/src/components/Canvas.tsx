@@ -4,10 +4,18 @@ import { useState, useRef, useEffect } from "react";
 import Map from "../assets/map.png";
 import Characters from "../assets/characters.png";
 
+interface Character {
+  direction: string;
+  positionX: number;
+  positionY: number;
+  currentFrame: number;
+  characterImg: number[];
+}
+
 export default function Canvas() {
   const [pressedKey, setPressedKey] = useState(false);
   const [background, setBackground] = useState({ x: 0, y: 0 });
-  const [character, setCharacter] = useState([
+  const [character, setCharacter] = useState<Character[]>([
     {
       direction: "down",
       positionX: 0,
@@ -68,15 +76,123 @@ export default function Canvas() {
     let myCharacter = character[0];
     switch (e.key) {
       case "ArrowUp":
+        if (!pressedKey) {
+          let frame = 0;
+          let cnt = 0;
+          let prevY = myCharacter.positionY;
+          const timer = setInterval(() => {
+            prevY -= 5;
+            setCharacter((prevCharacter) => {
+              if (frame < 2) {
+                frame += 1;
+              } else {
+                frame = 0;
+              }
+              return [
+                {
+                  ...myCharacter,
+                  positionY: prevY,
+                  currentFrame: frame,
+                  direction: "up",
+                },
+              ];
+            });
+            cnt++;
+            if (cnt === 6) {
+              setPressedKey(false);
+              clearInterval(timer);
+            }
+          }, 40);
+        }
         break;
       case "ArrowDown":
+        if (!pressedKey) {
+          let frame = 0;
+          let cnt = 0;
+          let prevY = myCharacter.positionY;
+          const timer = setInterval(() => {
+            prevY += 5;
+            setCharacter((prevCharacter) => {
+              if (frame < 2) {
+                frame += 1;
+              } else {
+                frame = 0;
+              }
+              return [
+                {
+                  ...myCharacter,
+                  positionY: prevY,
+                  currentFrame: frame,
+                  direction: "down",
+                },
+              ];
+            });
+            cnt++;
+            if (cnt === 6) {
+              setPressedKey(false);
+              clearInterval(timer);
+            }
+          }, 40);
+        }
         break;
       case "ArrowLeft":
         if (!pressedKey) {
+          let frame = 0;
+          let cnt = 0;
+          let prevX = myCharacter.positionX;
+          const timer = setInterval(() => {
+            prevX -= 5;
+            setCharacter((prevCharacter) => {
+              if (frame < 2) {
+                frame += 1;
+              } else {
+                frame = 0;
+              }
+              return [
+                {
+                  ...myCharacter,
+                  positionX: prevX,
+                  currentFrame: frame,
+                  direction: "left",
+                },
+              ];
+            });
+            cnt++;
+            if (cnt === 6) {
+              setPressedKey(false);
+              clearInterval(timer);
+            }
+          }, 40);
         }
         break;
       case "ArrowRight":
         if (!pressedKey) {
+          let frame = 0;
+          let cnt = 0;
+          let prevX = myCharacter.positionX;
+          const timer = setInterval(() => {
+            prevX += 5;
+            setCharacter((prevCharacter) => {
+              if (frame < 2) {
+                frame += 1;
+              } else {
+                frame = 0;
+              }
+              return [
+                {
+                  ...myCharacter,
+                  positionX: prevX,
+                  currentFrame: frame,
+                  direction: "right",
+                },
+              ];
+            });
+            cnt++;
+            if (cnt === 6) {
+              setPressedKey(false);
+              clearInterval(timer);
+            }
+          }, 40);
         }
         break;
       default:
@@ -85,8 +201,9 @@ export default function Canvas() {
 
   useEffect(() => {
     drawBackground();
-    character?.forEach((e) => drawCharacter(e));
+    drawCharacter(character[0]);
   }, [background, character]);
+
   return (
     <Wrapper>
       <canvas
