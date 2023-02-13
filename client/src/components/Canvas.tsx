@@ -77,6 +77,7 @@ export default function Canvas() {
     switch (e.key) {
       case "ArrowUp":
         if (!pressedKey) {
+          setPressedKey(true);
           let frame = 0;
           let cnt = 0;
           let prevY = myCharacter.positionY;
@@ -107,6 +108,7 @@ export default function Canvas() {
         break;
       case "ArrowDown":
         if (!pressedKey) {
+          setPressedKey(true);
           let frame = 0;
           let cnt = 0;
           let prevY = myCharacter.positionY;
@@ -137,6 +139,7 @@ export default function Canvas() {
         break;
       case "ArrowLeft":
         if (!pressedKey) {
+          setPressedKey(true);
           let frame = 0;
           let cnt = 0;
           let prevX = myCharacter.positionX;
@@ -167,6 +170,7 @@ export default function Canvas() {
         break;
       case "ArrowRight":
         if (!pressedKey) {
+          setPressedKey(true);
           let frame = 0;
           let cnt = 0;
           let prevX = myCharacter.positionX;
